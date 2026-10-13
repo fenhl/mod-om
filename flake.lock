@@ -1,0 +1,147 @@
+{
+  "nodes": {
+    "aurelia": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1790610780,
+        "narHash": "sha256-J+YhWK1MX9VsWchk0j1xkmlxiBdehaOoSxtrzSAt1X4=",
+        "owner": "Drackrath",
+        "repo": "Aurelia",
+        "rev": "50c44d33b97f4aee6fe694e90c464951970d9fd8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Drackrath",
+        "repo": "Aurelia",
+        "type": "github"
+      }
+    },
+    "flake": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1791823989,
+        "narHash": "sha256-wzSot0vYgnBvUN9PLO7CO36pGke/OaCUmvqQF1ZVooU=",
+        "owner": "fenhl",
+        "repo": "flake",
+        "rev": "df34b75d6a8b1390486fa502104e02f270087c4a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fenhl",
+        "repo": "flake",
+        "type": "github"
+      }
+    },
+    "flake-utils": {
+      "inputs": {
+        "systems": "systems"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1791734076,
+        "narHash": "sha256-i5qk1kLiit98rRbh1AXmWBNT9QXC/y4l5Wk/u5EdpDQ=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "7fd4004d0511991fff3a0524856a9be09e28c5f0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1791662279,
+        "narHash": "sha256-xI8L+UwJLIg75yVJwLPsY+AUEP1teCT3FyuvodyJu2Y=",
+        "rev": "6fcc160353f63555b560f25588925133c8f61f2a",
+        "revCount": 1015971,
+        "type": "tarball",
+        "url": "https://api.flakehub.com/f/pinned/NixOS/nixpkgs/0.2605.1015971%2Brev-6fcc160353f63555b560f25588925133c8f61f2a/01a12c0d-b8e3-7423-b16b-d84d8b3b87c0/source.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://flakehub.com/f/NixOS/nixpkgs/%2A.tar.gz"
+      }
+    },
+    "om-mappings": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1791392967,
+        "narHash": "sha256-dhqFrpL0jxQQb/nQWP0qyydiGftjKs9Gl3Vjq7u0icg=",
+        "owner": "Fate-of-Adrastus",
+        "repo": "om_mappings",
+        "rev": "459ca8a4d3222348fa48918dc351a2f9bc329ce3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Fate-of-Adrastus",
+        "repo": "om_mappings",
+        "type": "github"
+      }
+    },
+    "opus-mutatum": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1791853722,
+        "narHash": "sha256-Qiy0dK7FHbYxJKuTPWlF1qlf8dlWeWzgkoIsMa6Rxso=",
+        "owner": "fenhl",
+        "repo": "OpusMutatum",
+        "rev": "cb1a7b36684cc76d497e912c918c81d3acc00be3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fenhl",
+        "ref": "macos-lightning-path",
+        "repo": "OpusMutatum",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "aurelia": "aurelia",
+        "flake": "flake",
+        "om-mappings": "om-mappings",
+        "opus-mutatum": "opus-mutatum"
+      }
+    },
+    "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
