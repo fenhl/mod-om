@@ -11,7 +11,7 @@
             flake = false;
         };
         opus-mutatum = {
-            url = "github:fenhl/OpusMutatum/macos";
+            url = "github:Fate-of-Adrastus/OpusMutatum/coreifier";
             flake = false;
         };
     };
