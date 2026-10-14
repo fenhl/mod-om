@@ -117,16 +117,16 @@
     "opus-mutatum": {
       "flake": false,
       "locked": {
-        "lastModified": 1791923012,
+        "lastModified": 1791939240,
         "narHash": "sha256-HqUp8YcqhngPHGrBPOXfAJ7XdDZZqBUcBlXGoztOjls=",
         "owner": "fenhl",
         "repo": "OpusMutatum",
-        "rev": "f354b2884ea48e546765dd250d8e00040f5ff884",
+        "rev": "c19bb3f5ce71b7e7a1fd91262f8f5b83ea1565d4",
         "type": "github"
       },
       "original": {
         "owner": "fenhl",
-        "ref": "macos-lightning-path",
+        "ref": "macos",
         "repo": "OpusMutatum",
         "type": "github"
       }

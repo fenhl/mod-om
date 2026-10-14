@@ -11,7 +11,7 @@
             flake = false;
         };
         opus-mutatum = {
-            url = "github:fenhl/OpusMutatum/macos-lightning-path";
+            url = "github:fenhl/OpusMutatum/macos";
             flake = false;
         };
     };
