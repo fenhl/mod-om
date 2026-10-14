@@ -117,16 +117,16 @@
     "opus-mutatum": {
       "flake": false,
       "locked": {
-        "lastModified": 1792003857,
+        "lastModified": 1792019594,
         "narHash": "sha256-HqUp8YcqhngPHGrBPOXfAJ7XdDZZqBUcBlXGoztOjls=",
-        "owner": "Fate-of-Adrastus",
+        "owner": "QuintessentialOM",
         "repo": "OpusMutatum",
-        "rev": "6f205f68531b3a5a30aa0769ced37b8948ace3f2",
+        "rev": "e89ce535e3c636c450769995d8347d47c2659292",
         "type": "github"
       },
       "original": {
-        "owner": "Fate-of-Adrastus",
-        "ref": "coreifier",
+        "owner": "QuintessentialOM",
+        "ref": "dev",
         "repo": "OpusMutatum",
         "type": "github"
       }
