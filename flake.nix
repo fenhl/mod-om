@@ -2,6 +2,10 @@
     inputs = {
         flake.url = "github:fenhl/flake";
         aurelia.url = "github:Drackrath/Aurelia";
+        mutatum-setup-kit = {
+            url = "https://github.com/Fate-of-Adrastus/OpusMutatum/releases/download/v0.3-alpha_SetupKit/MutatumSetupKit_Alpha0.3.zip";
+            flake = false;
+        };
         om-mappings = {
             url = "github:Fate-of-Adrastus/om_mappings";
             flake = false;
@@ -73,26 +77,22 @@
 
                 # additional setup for Quintessential
                 #TODO automatically use the repos' latest releases
-                for file in ${pkgs.fetchzip {
-                    url = "https://github.com/Fate-of-Adrastus/OpusMutatum/releases/download/v0.3-alpha_SetupKit/MutatumSetupKit_Alpha0.3.zip";
-                    hash = "sha256-QdZzg11KGJOV+NFtnzQ2Mi6RBiKxAlN6xfw+l8kPjzE=";
-                    stripRoot = false;
-                }}/modded/*.dll; do
+                for file in ${attrs.mutatum-setup-kit}/modded/*.dll; do
                     ln -fs "$file" "$1"/modded
                 done
                 mkdir -p "$1"/modded/Mods
                 ln -fs ${pkgs.fetchurl {
-                    url = "https://github.com/Fate-of-Adrastus/Quintessential/releases/download/v0.7.0-alpha_Quintessential/QuintessentialCore_0.7.0.zip";
-                    hash = "sha256:a25c9a02f2513d684bb0c5abde51d9f0e2fe1015e8c9eb1d2b08cc4e108b7fd4";
-                }} "$1"/modded/Mods/QuintessentialCore_0.7.0.zip
+                    url = "https://github.com/Fate-of-Adrastus/Quintessential/releases/download/v0.7.1-alpha_Quintessential/QuintessentialCore_0.7.1.zip";
+                    hash = "sha256:7d3bf1db3434155208e729028f593911015bc4e8be34af313212d32e4be2b009";
+                }} "$1"/modded/Mods/QuintessentialCore_0.7.1.zip
                 ln -fs ${pkgs.fetchurl {
-                    url = "https://github.com/Fate-of-Adrastus/Quintessential/releases/download/v0.7.0-alpha_Quintessential/QuintessentialData_0.7.0.zip";
-                    hash = "sha256:0b4513e19b12f195f11f29bdc24da5730ed0f693735658ca67d7369dd3a334b7";
-                }} "$1"/modded/Mods/QuintessentialData_0.7.0.zip
+                    url = "https://github.com/Fate-of-Adrastus/Quintessential/releases/download/v0.7.1-alpha_Quintessential/QuintessentialData_0.7.1.zip";
+                    hash = "sha256:eab6bcdd9eb7227a35f5246dce4c25aa07b4e671289f82c5dc85f949d9176310";
+                }} "$1"/modded/Mods/QuintessentialData_0.7.1.zip
                 ln -fs ${pkgs.fetchurl {
-                    url = "https://github.com/Fate-of-Adrastus/Quintessential/releases/download/v0.7.0-alpha_Quintessential/QuintessentialUI_0.7.0.zip";
-                    hash = "sha256:ef82612998e85469b0fcad8bfc6185e02dea69107c8e129a2f8903feb26ff30f";
-                }} "$1"/modded/Mods/QuintessentialUI_0.7.0.zip
+                    url = "https://github.com/Fate-of-Adrastus/Quintessential/releases/download/v0.7.1-alpha_Quintessential/QuintessentialUI_0.7.1.zip";
+                    hash = "sha256:a155c80f7bfa2c7d2eab65eff88dcf7ae99764a0e02f1c3c928ba1f9b1091393";
+                }} "$1"/modded/Mods/QuintessentialUI_0.7.1.zip
 
                 # 6. in your opus magnum root, run `./OpusMutatum`. you should now have a modded instance (without quintessential, because i havent figured out how to compile that yet
                 export DOTNET_ROOT=${dotnetPkg}/share/dotnet

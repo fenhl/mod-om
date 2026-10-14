@@ -42,17 +42,30 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "lastModified": 1791914995,
+        "narHash": "sha256-Zf/xfQEAasnwnmEfHqW/4hjDE/s44yn2hD4RuVIZRjA=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "rev": "b7a79d3fea1e214f6d668d521cecec0c01e26544",
         "type": "github"
       },
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
         "type": "github"
+      }
+    },
+    "mutatum-setup-kit": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1791918146,
+        "narHash": "sha256-MJk3rbTz7j4KMFr3Y3pMeE5fL1h2L9yKFceT4SKZl88=",
+        "type": "tarball",
+        "url": "https://github.com/Fate-of-Adrastus/OpusMutatum/releases/download/v0.3-alpha_SetupKit/MutatumSetupKit_Alpha0.3.zip"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/Fate-of-Adrastus/OpusMutatum/releases/download/v0.3-alpha_SetupKit/MutatumSetupKit_Alpha0.3.zip"
       }
     },
     "nixpkgs": {
@@ -104,11 +117,11 @@
     "opus-mutatum": {
       "flake": false,
       "locked": {
-        "lastModified": 1791853722,
-        "narHash": "sha256-Qiy0dK7FHbYxJKuTPWlF1qlf8dlWeWzgkoIsMa6Rxso=",
+        "lastModified": 1791923012,
+        "narHash": "sha256-HqUp8YcqhngPHGrBPOXfAJ7XdDZZqBUcBlXGoztOjls=",
         "owner": "fenhl",
         "repo": "OpusMutatum",
-        "rev": "cb1a7b36684cc76d497e912c918c81d3acc00be3",
+        "rev": "f354b2884ea48e546765dd250d8e00040f5ff884",
         "type": "github"
       },
       "original": {
@@ -122,6 +135,7 @@
       "inputs": {
         "aurelia": "aurelia",
         "flake": "flake",
+        "mutatum-setup-kit": "mutatum-setup-kit",
         "om-mappings": "om-mappings",
         "opus-mutatum": "opus-mutatum"
       }
