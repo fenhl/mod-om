@@ -3,7 +3,10 @@
     "aurelia": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": [
+          "flake",
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1790610780,
@@ -21,14 +24,14 @@
     },
     "flake": {
       "inputs": {
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1791943679,
-        "narHash": "sha256-xWm8A90vXVU9Bjd6XW+lqlInJXJPa6EUfi4oIbEubUI=",
+        "lastModified": 1792028810,
+        "narHash": "sha256-0bAFSqLR8auFcI9uZgpnuqjqE/8mqfIQAiTxumSmSqU=",
         "owner": "fenhl",
         "repo": "flake",
-        "rev": "0ac67738ec3b08188bf7854ca26e06570b8c5033",
+        "rev": "c4a9656fda69c896416591c0145d471fea5061b5",
         "type": "github"
       },
       "original": {
@@ -70,28 +73,12 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1791734076,
-        "narHash": "sha256-i5qk1kLiit98rRbh1AXmWBNT9QXC/y4l5Wk/u5EdpDQ=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "7fd4004d0511991fff3a0524856a9be09e28c5f0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1791765022,
-        "narHash": "sha256-ZGq3ptZzA+oO0N/Wi/F+GbuTijLkYExD01LvpNFAvr0=",
-        "rev": "7993f34ee47e28a3d607a525aadc6c94b73be728",
-        "revCount": 1016058,
+        "lastModified": 1791883866,
+        "narHash": "sha256-yvkDdToRZ4IgPc9tSBzzCYJvTLf8n5eE3rgUkpCuD5A=",
+        "rev": "a033e66ab94a6bedf2c3d58d93a36319d3cbbbaf",
+        "revCount": 1016120,
         "type": "tarball",
-        "url": "https://api.flakehub.com/f/pinned/NixOS/nixpkgs/0.2605.1016058%2Brev-7993f34ee47e28a3d607a525aadc6c94b73be728/01a133ce-54f7-7200-8f40-7c10b5b25fac/source.tar.gz"
+        "url": "https://api.flakehub.com/f/pinned/NixOS/nixpkgs/0.2605.1016120%2Brev-a033e66ab94a6bedf2c3d58d93a36319d3cbbbaf/01a13b82-05be-75e2-9be3-b06765d5f4de/source.tar.gz"
       },
       "original": {
         "type": "tarball",
@@ -101,11 +88,11 @@
     "om-mappings": {
       "flake": false,
       "locked": {
-        "lastModified": 1791989160,
-        "narHash": "sha256-1MSKUnCRTeWU0rcc94sgmHvk+NvIQb+LrKBs82eMX10=",
+        "lastModified": 1792080643,
+        "narHash": "sha256-6332k8gTxymUwq0Z9n/yrbRatOPw4K7PbGVWGQo0EYo=",
         "owner": "Fate-of-Adrastus",
         "repo": "om_mappings",
-        "rev": "0933fcc48927d2bd1a7862a613fac5418567cf53",
+        "rev": "625d0c4b8e5f5f92b3b69d0825f43f297c2953f6",
         "type": "github"
       },
       "original": {
