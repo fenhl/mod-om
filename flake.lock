@@ -88,11 +88,11 @@
     "om-mappings": {
       "flake": false,
       "locked": {
-        "lastModified": 1792079834,
-        "narHash": "sha256-w37iC0O82Mg/bctYmbk96ngv9MSHSf+ptKHcLPVmoTA=",
+        "lastModified": 1792086908,
+        "narHash": "sha256-6332k8gTxymUwq0Z9n/yrbRatOPw4K7PbGVWGQo0EYo=",
         "owner": "QuintessentialOM",
         "repo": "om_mappings",
-        "rev": "0fc15c9ac8e077c9cbb4dac0e267245cf7298035",
+        "rev": "4914708ba4153d4446ce7279c5b4b42c4ef792ff",
         "type": "github"
       },
       "original": {
