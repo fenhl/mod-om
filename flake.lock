@@ -61,14 +61,14 @@
     "mutatum-setup-kit": {
       "flake": false,
       "locked": {
-        "lastModified": 1791918146,
-        "narHash": "sha256-MJk3rbTz7j4KMFr3Y3pMeE5fL1h2L9yKFceT4SKZl88=",
+        "lastModified": 1792087850,
+        "narHash": "sha256-8ZdEiEtnuV7QZJPPuV3r8hLEApJcwS7pbV5s9B2eaOQ=",
         "type": "tarball",
-        "url": "https://github.com/Fate-of-Adrastus/OpusMutatum/releases/download/v0.3-alpha_SetupKit/MutatumSetupKit_Alpha0.3.zip"
+        "url": "https://github.com/QuintessentialOM/OpusMutatum/releases/download/v1.0-CE/MutatumSetupKit_Beta0.4.zip"
       },
       "original": {
         "type": "tarball",
-        "url": "https://github.com/Fate-of-Adrastus/OpusMutatum/releases/download/v0.3-alpha_SetupKit/MutatumSetupKit_Alpha0.3.zip"
+        "url": "https://github.com/QuintessentialOM/OpusMutatum/releases/download/v1.0-CE/MutatumSetupKit_Beta0.4.zip"
       }
     },
     "nixpkgs": {
@@ -88,15 +88,15 @@
     "om-mappings": {
       "flake": false,
       "locked": {
-        "lastModified": 1792080643,
-        "narHash": "sha256-6332k8gTxymUwq0Z9n/yrbRatOPw4K7PbGVWGQo0EYo=",
-        "owner": "Fate-of-Adrastus",
+        "lastModified": 1792079834,
+        "narHash": "sha256-w37iC0O82Mg/bctYmbk96ngv9MSHSf+ptKHcLPVmoTA=",
+        "owner": "QuintessentialOM",
         "repo": "om_mappings",
-        "rev": "625d0c4b8e5f5f92b3b69d0825f43f297c2953f6",
+        "rev": "0fc15c9ac8e077c9cbb4dac0e267245cf7298035",
         "type": "github"
       },
       "original": {
-        "owner": "Fate-of-Adrastus",
+        "owner": "QuintessentialOM",
         "repo": "om_mappings",
         "type": "github"
       }
@@ -104,16 +104,15 @@
     "opus-mutatum": {
       "flake": false,
       "locked": {
-        "lastModified": 1792019594,
-        "narHash": "sha256-HqUp8YcqhngPHGrBPOXfAJ7XdDZZqBUcBlXGoztOjls=",
+        "lastModified": 1792085139,
+        "narHash": "sha256-PK2GBdBX158Qnzax6ZD/9gQJEcwX6w7QiNiMekAQ5xY=",
         "owner": "QuintessentialOM",
         "repo": "OpusMutatum",
-        "rev": "e89ce535e3c636c450769995d8347d47c2659292",
+        "rev": "c6372e50293a68357df8cb2288c3c2918d119876",
         "type": "github"
       },
       "original": {
         "owner": "QuintessentialOM",
-        "ref": "dev",
         "repo": "OpusMutatum",
         "type": "github"
       }

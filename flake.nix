@@ -6,15 +6,15 @@
             inputs.nixpkgs.follows = "flake/nixpkgs";
         };
         mutatum-setup-kit = {
-            url = "https://github.com/Fate-of-Adrastus/OpusMutatum/releases/download/v0.3-alpha_SetupKit/MutatumSetupKit_Alpha0.3.zip";
+            url = "https://github.com/QuintessentialOM/OpusMutatum/releases/download/v1.0-CE/MutatumSetupKit_Beta0.4.zip";
             flake = false;
         };
         om-mappings = {
-            url = "github:Fate-of-Adrastus/om_mappings";
+            url = "github:QuintessentialOM/om_mappings";
             flake = false;
         };
         opus-mutatum = {
-            url = "github:QuintessentialOM/OpusMutatum/dev";
+            url = "github:QuintessentialOM/OpusMutatum";
             flake = false;
         };
     };
@@ -85,15 +85,15 @@
                 done
                 mkdir -p "$1"/modded/Mods
                 cp ${pkgs.fetchurl {
-                    url = "https://github.com/Fate-of-Adrastus/Quintessential/releases/download/v0.8.0-alpha_Quintessential/QuintessentialCore_0.8.0.zip";
+                    url = "https://github.com/QuintessentialOM/Quintessential/releases/download/v0.8.0/QuintessentialCore_0.8.0.zip";
                     hash = "sha256:6b2cf2ef2dbfbd72a5956842b38de9982a715db9d20ace2d2d20063c0ceb5436";
                 }} "$1"/modded/Mods/QuintessentialCore_0.8.0.zip
                 cp ${pkgs.fetchurl {
-                    url = "https://github.com/Fate-of-Adrastus/Quintessential/releases/download/v0.8.0-alpha_Quintessential/QuintessentialData_0.8.0.zip";
+                    url = "https://github.com/QuintessentialOM/Quintessential/releases/download/v0.8.0/QuintessentialData_0.8.0.zip";
                     hash = "sha256:3b1a72a99c6d61b99e066af965ad1c354a2eb1dbd931f106c077c252b676453b";
                 }} "$1"/modded/Mods/QuintessentialData_0.8.0.zip
                 cp ${pkgs.fetchurl {
-                    url = "https://github.com/Fate-of-Adrastus/Quintessential/releases/download/v0.8.0-alpha_Quintessential/QuintessentialUI_0.8.0.zip";
+                    url = "https://github.com/QuintessentialOM/Quintessential/releases/download/v0.8.0/QuintessentialUI_0.8.0.zip";
                     hash = "sha256:655c20ca8edf096725da775c6a39edaab5c1cf50806086b3cc331f3f69827961";
                 }} "$1"/modded/Mods/QuintessentialUI_0.8.0.zip
 
