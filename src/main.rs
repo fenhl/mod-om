@@ -22,7 +22,10 @@ use {
     },
     serde::Deserialize,
     tokio::{
-        io::AsyncWriteExt as _,
+        io::{
+            self,
+            AsyncWriteExt as _,
+        },
         process::Command,
     },
     wheel::{
@@ -84,8 +87,37 @@ enum Error {
     MissingQuintRelease,
 }
 
-#[wheel::main]
-async fn main(subcommand: Subcommand) -> Result<bool, Error> {
+struct Exit(bool);
+
+impl wheel::CustomExit for Exit {
+    fn exit(self, cmd_name: &'static str) {
+        wheel::MainOutput::exit(self.0, cmd_name, true)
+    }
+}
+
+impl wheel::CustomExit for Error {
+    fn exit(self, cmd_name: &'static str) {
+        match self {
+            Self::Wheel(wheel::Error::CommandExit { name, output }) => {
+                eprintln!("{cmd_name}: command `{name}` exited with {}", output.status);
+                eprintln!("This is a bug in {cmd_name}. Please report it at https://github.com/fenhl/mod-om and include the following debug info:");
+                eprintln!("stdout:");
+                eprintln!("{}", String::from_utf8_lossy(&output.stdout));
+                eprintln!("stderr:");
+                eprintln!("{}", String::from_utf8_lossy(&output.stderr));
+            }
+            _ => {
+                eprintln!("{cmd_name}: {self}");
+                eprintln!("This is a bug in {cmd_name}. Please report it at https://github.com/fenhl/mod-om and include the following debug info:");
+                eprintln!("{self:?}");
+            }
+        }
+        std::process::exit(1)
+    }
+}
+
+#[wheel::main(custom_exit)]
+async fn main(subcommand: Subcommand) -> Result<Exit, Error> {
     let _ = rustls::crypto::ring::default_provider().install_default();
     match subcommand {
         Subcommand::Init { out_path } => {
@@ -103,7 +135,7 @@ async fn main(subcommand: Subcommand) -> Result<bool, Error> {
             else {
                 eprintln!("mod-om: could not find Opus Magnum in your Steam library");
                 eprintln!("You can buy the game at https://store.steampowered.com/app/558990/Opus_Magnum/");
-                return Ok(false)
+                return Ok(Exit(false))
             };
             if om.active_branch != "community-edition" {
                 eprintln!("mod-om: this command requires the Community Edition of Opus Magnum");
@@ -111,14 +143,21 @@ async fn main(subcommand: Subcommand) -> Result<bool, Error> {
                 eprintln!("1. In your Steam library, select Opus Magnum, click on Manage (gear icon)");
                 eprintln!("2. Select “Properties”");
                 eprintln!("3. Select “Game Versions & Betas”, then select “community-edition”");
-                return Ok(false)
+                return Ok(Exit(false))
             }
             let Some(install_path) = om.install_path else {
                 eprintln!("mod-om: Opus Magnum is not installed");
                 eprintln!("In your Steam library, select Opus Magnum, click Install");
-                return Ok(false)
+                return Ok(Exit(false))
             };
-            copy_dir(install_path, &out_path).await?;
+            match copy_dir(install_path, &out_path).await {
+                Ok(()) => {}
+                Err(wheel::Error::Io { inner, context }) if inner.kind() == io::ErrorKind::AlreadyExists && let wheel::IoErrorContext::Path(error_path) = &context && *error_path == out_path => {
+                    eprintln!("mod-om: the path `{}` already exists", out_path.display());
+                    return Ok(Exit(false))
+                }
+                Err(e) => return Err(e.into()),
+            }
             {
                 let opus_mutatum = TempDir::new().await?;
                 gix::prepare_clone("https://github.com/QuintessentialOM/OpusMutatum.git", &opus_mutatum)?
@@ -203,5 +242,5 @@ async fn main(subcommand: Subcommand) -> Result<bool, Error> {
             cmd.current_dir(out_path).spawn().at_command("OpusMutatum")?.check("OpusMutatum").await?;
         }
     }
-    Ok(true)
+    Ok(Exit(true))
 }
