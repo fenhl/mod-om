@@ -58,19 +58,6 @@
         "type": "github"
       }
     },
-    "mutatum-setup-kit": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1792087850,
-        "narHash": "sha256-8ZdEiEtnuV7QZJPPuV3r8hLEApJcwS7pbV5s9B2eaOQ=",
-        "type": "tarball",
-        "url": "https://github.com/QuintessentialOM/OpusMutatum/releases/download/v1.0-CE/MutatumSetupKit_Beta0.4.zip"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://github.com/QuintessentialOM/OpusMutatum/releases/download/v1.0-CE/MutatumSetupKit_Beta0.4.zip"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1791883866,
@@ -85,45 +72,10 @@
         "url": "https://flakehub.com/f/NixOS/nixpkgs/%2A.tar.gz"
       }
     },
-    "om-mappings": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1792086908,
-        "narHash": "sha256-6332k8gTxymUwq0Z9n/yrbRatOPw4K7PbGVWGQo0EYo=",
-        "owner": "QuintessentialOM",
-        "repo": "om_mappings",
-        "rev": "4914708ba4153d4446ce7279c5b4b42c4ef792ff",
-        "type": "github"
-      },
-      "original": {
-        "owner": "QuintessentialOM",
-        "repo": "om_mappings",
-        "type": "github"
-      }
-    },
-    "opus-mutatum": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1792085139,
-        "narHash": "sha256-PK2GBdBX158Qnzax6ZD/9gQJEcwX6w7QiNiMekAQ5xY=",
-        "owner": "QuintessentialOM",
-        "repo": "OpusMutatum",
-        "rev": "c6372e50293a68357df8cb2288c3c2918d119876",
-        "type": "github"
-      },
-      "original": {
-        "owner": "QuintessentialOM",
-        "repo": "OpusMutatum",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "aurelia": "aurelia",
-        "flake": "flake",
-        "mutatum-setup-kit": "mutatum-setup-kit",
-        "om-mappings": "om-mappings",
-        "opus-mutatum": "opus-mutatum"
+        "flake": "flake"
       }
     },
     "systems": {
