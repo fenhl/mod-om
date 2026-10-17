@@ -21,4 +21,4 @@ This is a script that will set up a modded instance of [_Opus Magnum_](https://e
 3. In a terminal, run `nix run github:fenhl/mod-om init out`, replacing `out` with the path where the modded instance should be created. This directory should not exist yet.
     * You can also replace `out` with the path to an existing modded instance to update the toolchain.
 4. The modded game will launch. After it finishes loading, confirm that you see “3 mods loaded” in the bottom left corner of the title screen, then exit the game.
-5. You can now use the modded instance for [mod development](https://github.com/Fate-of-Adrastus/Quintessential/wiki/Getting-Started). It is recommended to use a separate instance for each mod.
+5. You can now install some [mods](https://github.com/QuintessentialOM/Quintessential/wiki/Mod-List) or use the modded instance for [mod development](https://github.com/Fate-of-Adrastus/Quintessential/wiki/Getting-Started). When developing mods, it is recommended to use a separate instance for each mod.
