@@ -45,7 +45,8 @@
                         attrs.aurelia.packages.${pkgs.stdenv.hostPlatform.system}.default
                         dotnetPkg
                         mono
-                    ] ++ lib.optional (pkgs.stdenv.isLinux) steam-run)}
+                    ] ++ lib.optional (pkgs.stdenv.isLinux) steam-run)} \
+                    --set DOTNET_ROOT ${dotnetPkg}/share/dotnet
             '';
             postInstall = let
                 mod-om = "${pkgs.stdenv.hostPlatform.emulator pkgs.buildPackages} $out/bin/mod-om";
