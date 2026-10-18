@@ -43,9 +43,11 @@ jobs:
     - id: version
       run: echo "version=$(cargo metadata --format-version 1 | jq -r '.packages[] | select(.name == "mod-om") | .version')" >> $GITHUB_OUTPUT
     - uses: actions/download-artifact@v8
+      with:
+        path: artifacts
     - uses: softprops/action-gh-release@v3
       with:
         tag_name: v${{ steps.version.outputs.version }}
         name: mod-om ${{ steps.version.outputs.version }}
         body: ${{ github.event.head_commit.message }}
-        files: '*'
+        files: artifacts/*
