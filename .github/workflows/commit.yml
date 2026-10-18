@@ -35,6 +35,8 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
     - id: version
       run: echo "version=$(cargo metadata --format-version 1 | jq -r '.packages[] | select(.name == "mod-om") | .version')" >> $GITHUB_OUTPUT
