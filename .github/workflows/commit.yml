@@ -28,6 +28,7 @@ jobs:
         name: fenhl
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
     - run: nix build
+    - run: ls -R result
     - uses: actions/upload-artifact@v7
       with:
         name: mod-om-${{ steps.platform.outputs.platform }}
