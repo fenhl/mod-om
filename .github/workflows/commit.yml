@@ -38,6 +38,7 @@ jobs:
     permissions:
       contents: write
     steps:
+    - uses: actions/checkout@v7
     - id: version
       run: echo "version=$(cargo metadata --format-version 1 | jq -r '.packages[] | select(.name == "mod-om") | .version')" >> $GITHUB_OUTPUT
     - uses: actions/download-artifact@v8
