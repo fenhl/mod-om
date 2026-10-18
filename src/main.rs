@@ -218,6 +218,24 @@ async fn main(subcommand: Subcommand) -> Result<Exit, Error> {
                 }
                 Err(e) => return Err(e.into()),
             }
+            if which("dotnet").is_err() {
+                cfg_select! {
+                    target_os = "macos" => if let Ok(brew) = which("brew") {
+                        Command::new(brew).arg("install").arg("dotnet").spawn().at_command("brew")?.check("brew").await?;
+                    },
+                    _ => {}
+                }
+                if which("dotnet").is_err() {
+                    eprintln!("mod-om: dotnet is not installed");
+                    eprintln!("The recommended version is 10.0, you will need both the runtime and the SDK");
+                    cfg_select! {
+                        target_os = "macos" => eprintln!("See https://learn.microsoft.com/en-us/dotnet/core/install/macos for install instructions"),
+                        target_os = "linux" => eprintln!("See https://learn.microsoft.com/en-us/dotnet/core/install/linux for install instructions"),
+                        _ => {}
+                    }
+                    return Ok(Exit(false))
+                }
+            }
             {
                 let opus_mutatum = TempDir::new().await?;
                 gix::prepare_clone("https://github.com/QuintessentialOM/OpusMutatum.git", &opus_mutatum)?
@@ -275,6 +293,23 @@ async fn main(subcommand: Subcommand) -> Result<Exit, Error> {
                     .send().await?
                     .detailed_error_for_status().await?
                     .download(mods_path.join(asset.name)).await?;
+            }
+            if which("mono").is_err() {
+                cfg_select! {
+                    target_os = "macos" => if let Ok(brew) = which("brew") {
+                        Command::new(brew).arg("install").arg("mono").spawn().at_command("brew")?.check("brew").await?;
+                    },
+                    _ => {}
+                }
+                if which("mono").is_err() {
+                    eprintln!("mod-om: mono is not installed");
+                    cfg_select! {
+                        target_os = "macos" => eprintln!("See https://www.mono-project.com/docs/getting-started/install/mac/ for install instructions"),
+                        target_os = "linux" => eprintln!("See https://www.mono-project.com/docs/getting-started/install/linux/ for install instructions"),
+                        _ => {}
+                    }
+                    return Ok(Exit(false))
+                }
             }
             let mut cmd = cfg_select! {
                 target_os = "linux" => {{

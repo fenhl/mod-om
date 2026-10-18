@@ -27,6 +27,7 @@
                     attrs.aurelia.packages.${pkgs.stdenv.hostPlatform.system}.default
                     cargo
                     dotnetPkg
+                    mono
                 ] ++ lib.optional (pkgs.stdenv.isLinux) steam-run;
             };
             pre-commit = { pkgs, ... }: {
