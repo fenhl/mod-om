@@ -5,21 +5,35 @@
             url = "github:Drackrath/Aurelia";
             inputs.nixpkgs.follows = "flake/nixpkgs";
         };
+        rust-overlay = {
+            url = "github:oxalica/rust-overlay";
+            inputs.nixpkgs.follows = "flake/nixpkgs";
+        };
     };
     outputs = attrs: attrs.flake.lib {
         config.allowUnfree = true;
-        devShells.default = { pkgs, ... }: let
-            dotnetPkg = with pkgs.dotnetCorePackages; combinePackages [
-                runtime_10_0
-                sdk_10_0
-            ];
-        in {
-            DOTNET_ROOT = "${dotnetPkg}/share/dotnet";
-            packages = with pkgs; [
-                attrs.aurelia.packages.${pkgs.stdenv.hostPlatform.system}.default
-                cargo
-                dotnetPkg
-            ] ++ lib.optional (pkgs.stdenv.isLinux) steam-run;
+        overlays = [
+            attrs.rust-overlay.overlays.default
+        ];
+        devShells = {
+            default = { pkgs, ... }: let
+                dotnetPkg = with pkgs.dotnetCorePackages; combinePackages [
+                    runtime_10_0
+                    sdk_10_0
+                ];
+            in {
+                DOTNET_ROOT = "${dotnetPkg}/share/dotnet";
+                packages = with pkgs; [
+                    attrs.aurelia.packages.${pkgs.stdenv.hostPlatform.system}.default
+                    cargo
+                    dotnetPkg
+                ] ++ lib.optional (pkgs.stdenv.isLinux) steam-run;
+            };
+            pre-commit = { pkgs, ... }: {
+                packages = with pkgs; [
+                    rust-bin.nightly.latest.default # nightly cargo, required to run the pre-commit script
+                ];
+            };
         };
         packages.default = { pkgs, ... }: let
             dotnetPkg = with pkgs.dotnetCorePackages; combinePackages [
