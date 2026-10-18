@@ -6,7 +6,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, ubuntu-26.04-arm, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v7
@@ -14,10 +14,13 @@ jobs:
       run: |
         case ${{ matrix.os }} in
           ubuntu-latest)
-            echo "platform=linux" >> $GITHUB_OUTPUT
+            echo "platform=x86_64-linux" >> $GITHUB_OUTPUT
+            ;;
+          ubuntu-26.04-arm)
+            echo "platform=aarch64-linux" >> $GITHUB_OUTPUT
             ;;
           macos-latest)
-            echo "platform=macos" >> $GITHUB_OUTPUT
+            echo "platform=aarch64-macos" >> $GITHUB_OUTPUT
             ;;
         esac
     - uses: cachix/install-nix-action@v31

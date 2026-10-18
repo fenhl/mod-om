@@ -223,6 +223,7 @@ async fn main(subcommand: Subcommand) -> Result<Exit, Error> {
                     target_os = "macos" => if let Ok(brew) = which("brew") {
                         Command::new(brew).arg("install").arg("dotnet").spawn().at_command("brew")?.check("brew").await?;
                     },
+                    //TODO on Linux, check for common package managers and offer to install using the first detected one
                     _ => {}
                 }
                 if which("dotnet").is_err() {
@@ -299,6 +300,7 @@ async fn main(subcommand: Subcommand) -> Result<Exit, Error> {
                     target_os = "macos" => if let Ok(brew) = which("brew") {
                         Command::new(brew).arg("install").arg("mono").spawn().at_command("brew")?.check("brew").await?;
                     },
+                    //TODO on Linux, check for common package managers and offer to install using the first detected one
                     _ => {}
                 }
                 if which("mono").is_err() {
