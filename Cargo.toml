@@ -32,4 +32,5 @@ serde_json = { package = "serde_json_path_to_error", version = "0.1" }
 thiserror = "2"
 tokio = { version = "1", features = ["io-util", "process", "parking_lot"] }
 wheel = { git = "https://github.com/fenhl/wheel", features = ["github", "serde_json"] }
+which = "8"
 zip = "9"

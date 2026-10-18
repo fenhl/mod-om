@@ -13,7 +13,10 @@ use {
         pin::pin,
         time::Duration,
     },
-    async_tempfile::TempDir,
+    async_tempfile::{
+        TempDir,
+        TempFile,
+    },
     futures::stream::TryStreamExt as _,
     itertools::Itertools as _,
     reqwest::header::{
@@ -40,9 +43,13 @@ use {
             ReqwestResponseExt as _,
         },
     },
+    which::which,
     zip::read::ZipArchive,
 };
-#[cfg(unix)] use std::os::unix::ffi::OsStrExt as _;
+#[cfg(unix)] use std::os::unix::{
+    fs::PermissionsExt as _,
+    ffi::OsStrExt as _,
+};
 
 const OM_STEAM_ID: u32 = 558990;
 
@@ -79,8 +86,12 @@ enum Error {
     #[error(transparent)] Tempfile(#[from] async_tempfile::Error),
     #[error(transparent)] Wheel(#[from] wheel::Error),
     #[error(transparent)] Zip(#[from] zip::result::ZipError),
+    #[error("failed to find Aurelia")]
+    ExactlyOneAureliaAsset,
     #[error("failed to find Mutatum Setup Kit")]
-    ExactlyOneReleaseAsset,
+    ExactlyOneMutatumAsset,
+    #[error("no Aurelia releases found")]
+    MissingAureliaRelease,
     #[error("no OpusMutatum releases found")]
     MissingMutatumRelease,
     #[error("no Quintessential releases found")]
@@ -128,8 +139,54 @@ async fn main(subcommand: Subcommand) -> Result<Exit, Error> {
                 install_path: Option<PathBuf>,
             }
 
+            #[cfg_attr(not(unix), allow(unused_mut))] let mut headers = HeaderMap::default();
+            #[cfg(unix)] {
+                if let Some(github_token) = env::var_os("GITHUB_TOKEN") {
+                    headers.insert(reqwest::header::AUTHORIZATION, HeaderValue::from_bytes(github_token.as_bytes())?);
+                }
+            }
+            let github_http_client = reqwest::Client::builder()
+                .user_agent(concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION"), " (https://github.com/fenhl/mod-om)"))
+                .timeout(Duration::from_secs(30))
+                .default_headers(headers)
+                .use_rustls_tls()
+                .hickory_dns(!cfg!(windows)) // Windows Firewall breaks hickory-dns
+                .https_only(true)
+                .http2_prior_knowledge()
+                .build()?;
             //TODO eliminate `aurelia` subprocess call (copy required functionality from aurelia's source?)
-            let Some(om) = serde_json::from_slice::<Vec<Game>>(&Command::new("aurelia").arg("list").arg("--json").check("aurelia list --json").await?.stdout).at_command("aurelia list --json")?
+            let mut aurelia_tempfile = None;
+            let aurelia = if let Ok(aurelia) = which("aurelia") {
+                aurelia
+            } else {
+                let aurelia_url = Repo::new("Drackrath", "Aurelia").latest_release(&github_http_client).await?
+                    .ok_or(Error::MissingAureliaRelease)?
+                    .assets
+                    .into_iter()
+                    .filter(|asset| asset.name == cfg_select! {
+                        all(target_os = "windows", target_arch = "aarch64") => "aurelia_windows_arm64.exe",
+                        all(target_os = "windows", target_arch = "x86_64") => "aurelia_windows_x86_64.exe",
+                        all(target_os = "macos", target_arch = "aarch64") => "aurelia_macOS_arm64",
+                        all(target_os = "macos", target_arch = "x86_64") => "aurelia_macOS_x86_64",
+                        all(target_os = "linux", target_arch = "aarch64") => "aurelia_linux_arm64",
+                        all(target_os = "linux", target_arch = "x86_64") => "aurelia_linux_x86_64",
+                    })
+                    .exactly_one().map_err(|_| Error::ExactlyOneAureliaAsset)?
+                    .browser_download_url;
+                let mut aurelia_file = TempFile::builder().prefix("aurelia_").suffix(cfg_select! {
+                    target_os = "windows" => ".exe",
+                    _ => "",
+                }).create().await?;
+                github_http_client.get(aurelia_url)
+                    .send().await?
+                    .detailed_error_for_status().await?
+                    .write_to(&mut aurelia_file).await.at(aurelia_file.file_path())?;
+                #[cfg(unix)] { aurelia_file.set_permissions(fs::Permissions::from_mode(0x755)).await.at(aurelia_file.file_path())? }
+                let path = aurelia_file.file_path().clone();
+                aurelia_tempfile = Some(aurelia_file);
+                path
+            };
+            let Some(om) = serde_json::from_slice::<Vec<Game>>(&Command::new(aurelia).arg("list").arg("--json").check("aurelia list --json").await?.stdout).at_command("aurelia list --json")?
                 .into_iter()
                 .find(|game| game.app_id == OM_STEAM_ID)
             else {
@@ -137,6 +194,9 @@ async fn main(subcommand: Subcommand) -> Result<Exit, Error> {
                 eprintln!("You can buy the game at https://store.steampowered.com/app/558990/Opus_Magnum/");
                 return Ok(Exit(false))
             };
+            if let Some(aurelia_tempfile) = aurelia_tempfile {
+                aurelia_tempfile.drop_async().await;
+            }
             if om.active_branch != "community-edition" {
                 eprintln!("mod-om: this command requires the Community Edition of Opus Magnum");
                 //TODO interactively switch to community-edition?
@@ -180,27 +240,12 @@ async fn main(subcommand: Subcommand) -> Result<Exit, Error> {
                 copy_dir(om_mappings.join("intermediary"), out_path.join("modded").join("Mappings").join("intermediary")).await?;
                 copy_dir(om_mappings.join("named"), out_path.join("modded").join("Mappings").join("named")).await?;
             }
-            #[cfg_attr(not(unix), allow(unused_mut))] let mut headers = HeaderMap::default();
-            #[cfg(unix)] {
-                if let Some(github_token) = env::var_os("GITHUB_TOKEN") {
-                    headers.insert(reqwest::header::AUTHORIZATION, HeaderValue::from_bytes(github_token.as_bytes())?);
-                }
-            }
-            let github_http_client = reqwest::Client::builder()
-                .user_agent(concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION"), " (https://github.com/fenhl/mod-om)"))
-                .timeout(Duration::from_secs(30))
-                .default_headers(headers)
-                .use_rustls_tls()
-                .hickory_dns(!cfg!(windows)) // Windows Firewall breaks hickory-dns
-                .https_only(true)
-                .http2_prior_knowledge()
-                .build()?;
             let mutatum_setup_kit = Repo::new("QuintessentialOM", "OpusMutatum").latest_release(&github_http_client).await?
                 .ok_or(Error::MissingMutatumRelease)?
                 .assets
                 .into_iter()
                 .filter(|asset| asset.name.starts_with("MutatumSetupKit"))
-                .exactly_one().map_err(|_| Error::ExactlyOneReleaseAsset)?
+                .exactly_one().map_err(|_| Error::ExactlyOneMutatumAsset)?
                 .browser_download_url;
             let mutatum_setup_kit = github_http_client.get(mutatum_setup_kit)
                 .send().await?
