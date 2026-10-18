@@ -28,10 +28,11 @@ jobs:
         name: fenhl
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
     - run: nix build .#raw
+    - run: cp result/bin/mod-om-raw mod-om-${{ steps.platform.outputs.platform }}
     - uses: actions/upload-artifact@v7
       with:
-        name: mod-om-${{ steps.platform.outputs.platform }}
-        path: result/bin/mod-om-raw
+        path: mod-om-${{ steps.platform.outputs.platform }}
+        archive: false
     - run: nix build --no-link
   release:
     needs: build
@@ -45,6 +46,7 @@ jobs:
     - uses: actions/download-artifact@v8
       with:
         path: artifacts
+        merge-multiple: true
     - run: ls -R artifacts
     - uses: softprops/action-gh-release@v3
       with:
