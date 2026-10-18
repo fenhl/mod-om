@@ -1,0 +1,47 @@
+name: "On Commit"
+on:
+  push:
+    branches: [ "main" ]
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v7
+    - id: platform
+      run: |
+        case ${{ matrix.os }} in
+          ubuntu-latest)
+            echo "platform=linux" >> $GITHUB_OUTPUT
+            ;;
+          macos-latest)
+            echo "platform=macos" >> $GITHUB_OUTPUT
+            ;;
+        esac
+    - uses: cachix/install-nix-action@v31
+      with:
+        github_access_token: ${{ secrets.GITHUB_TOKEN }}
+    - uses: cachix/cachix-action@v17
+      with:
+        name: fenhl
+        authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+    - run: nix build
+    - uses: actions/upload-artifact@v7
+      with:
+        name: mod-om-${{ steps.platform.outputs.platform }}
+        path: result/bin/.mod-om-wrapped
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - id: version
+      run: echo "version=$(cargo metadata --format-version 1 | jq -r '.packages[] | select(.name == "mod-om") | .version')" >> $GITHUB_OUTPUT
+    - uses: actions/download-artifact@v8
+    - uses: softprops/action-gh-release@v3
+      with:
+        tag_name: v${{ steps.version.outputs.version }}
+        name: mod-om ${{ steps.version.outputs.version }}
+        body: ${{ github.event.head_commit.message }}
+        files: *
