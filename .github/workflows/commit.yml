@@ -27,12 +27,12 @@ jobs:
       with:
         name: fenhl
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-    - run: nix build
-    - run: ls -R result
+    - run: nix build .#raw
     - uses: actions/upload-artifact@v7
       with:
         name: mod-om-${{ steps.platform.outputs.platform }}
-        path: result/bin/.mod-om-wrapped
+        path: result/bin/mod-om-raw
+    - run: nix build --no-link
   release:
     needs: build
     runs-on: ubuntu-latest
