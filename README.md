@@ -53,7 +53,7 @@ The script can be installed using the Nix package manager, which also automatica
 ## Standalone
 
 1. Download the script:
-    * [for macOS](https://github.com/fenhl/mod-om/releases/latest/download/mod-om-macos)
+    * [for macOS](https://github.com/fenhl/mod-om/releases/latest/download/mod-om-aarch64-macos)
     * [for Linux (x86-64)](https://github.com/fenhl/mod-om/releases/latest/download/mod-om-x86_64-linux)
     * [for Linux (aarch64)](https://github.com/fenhl/mod-om/releases/latest/download/mod-om-aarch64-linux)
 2. Open a command line (e.g. “Terminal” or “Konsole” app)
