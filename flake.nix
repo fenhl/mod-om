@@ -28,7 +28,7 @@
                     cargo
                     dotnetPkg
                     mono
-                ] ++ lib.optional (pkgs.stdenv.isLinux) steam-run;
+                ] ++ lib.optional (pkgs.stdenv.hostPlatform.isLinux && !pkgs.stdenv.hostPlatform.isAarch64) steam-run;
             };
             pre-commit = { pkgs, ... }: {
                 packages = with pkgs; [
@@ -51,7 +51,7 @@
                     mv $out/bin/mod-om $out/bin/mod-om-raw
                 '';
             };
-            default = { pkgs, system, ... }: let
+            default = { pkgs, ... }: let
                 dotnetPkg = with pkgs.dotnetCorePackages; combinePackages [
                     runtime_10_0
                     sdk_10_0
@@ -65,12 +65,12 @@
                     makeWrapper # required for wrapProgram in postFixup hook
                 ];
             } (''
-                makeWrapper ${attrs.self.packages.${system}.raw}/bin/mod-om-raw $out/bin/mod-om \
+                makeWrapper ${attrs.self.packages.${pkgs.stdenv.hostPlatform.system}.raw}/bin/mod-om-raw $out/bin/mod-om \
                     --prefix PATH : ${pkgs.lib.makeBinPath (with pkgs; [
                         attrs.aurelia.packages.${pkgs.stdenv.hostPlatform.system}.default
                         dotnetPkg
                         mono
-                    ] ++ lib.optional (pkgs.stdenv.isLinux) steam-run)} \
+                    ] ++ lib.optional (pkgs.stdenv.hostPlatform.isLinux && !pkgs.stdenv.hostPlatform.isAarch64) steam-run)} \
                     --set DOTNET_ROOT ${dotnetPkg}/share/dotnet
             '' + (let
                 mod-om = "${pkgs.stdenv.hostPlatform.emulator pkgs.buildPackages} $out/bin/mod-om";
