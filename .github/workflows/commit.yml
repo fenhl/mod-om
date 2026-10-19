@@ -54,5 +54,7 @@ jobs:
       with:
         tag_name: v${{ steps.version.outputs.version }}
         name: mod-om ${{ steps.version.outputs.version }}
-        body: ${{ github.event.head_commit.message }}
+        body: |
+          The following change was made in this release:
+          > ${{ github.event.head_commit.message }}
         files: artifacts/*
