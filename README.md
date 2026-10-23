@@ -2,7 +2,7 @@ This is a script that will set up a modded instance of [_Opus Magnum_](https://e
 
 # Prerequisites
 
-* macOS or Linux (for Windows, please follow [the manual setup instructions](https://github.com/Fate-of-Adrastus/Quintessential/wiki/How-to-mod-the-game#windows))
+* macOS or Linux (Windows support is [planned](https://github.com/fenhl/mod-om/issues/2), please follow [the manual setup instructions](https://github.com/Fate-of-Adrastus/Quintessential/wiki/How-to-mod-the-game#windows) for now)
 * [_Opus Magnum_](https://store.steampowered.com/app/558990/Opus_Magnum/) installed via [Steam](https://store.steampowered.com/about/)
 
 # Installation
