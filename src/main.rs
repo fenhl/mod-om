@@ -313,6 +313,7 @@ async fn main(subcommand: Subcommand) -> Result<Exit, Error> {
                     return Ok(Exit(false))
                 }
             }
+            fs::write(out_path.join("tasks.txt"), "Tasks:\n* strings --onlyOnChange\n* intermediary --onlyOnChange\n* merge --onlyOnChange --asNamed\n* run --readLogs\n\nAutoExit:\n  always\n").await?;
             let mut cmd = cfg_select! {
                 target_os = "linux" => {{
                     let mut cmd = Command::new("steam-run");
